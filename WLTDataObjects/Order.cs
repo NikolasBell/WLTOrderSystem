@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace WLTDataObjects
 {
-    internal class Order
+    public class Order
     {
-        public PaymentMethod PayType { get; private set; }
-        public string OrderNotes { get; private set; }
-        public List<Item> Items { get; private set; }
+        public PaymentMethod PayType { get; set; }
+        public string OrderNotes { get; set; }
+        public List<Item> Items { get; set; }
     }
 }

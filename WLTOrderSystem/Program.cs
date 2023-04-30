@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WLTDataObjects;
 
 namespace WLTOrderSystem
 {
@@ -14,9 +15,13 @@ namespace WLTOrderSystem
         [STAThread]
         static void Main()
         {
+            //Declare needed data paths
+            AppData.SalesDataPath = Application.StartupPath + @"\" + "SalesData";
+            AppData.VendorDataPath = Application.StartupPath + @"\" + "VendorData";
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmMain());
         }
     }
 }

@@ -8,13 +8,13 @@ namespace WLTDataObjects
 {
     public class Item
     {
-        public Vendor VendorCode { get; private set; }
-        public string Description { get; private set; }
-        public int Quantity { get; private set; }
-        public decimal Price { get; private set; }
+        public Vendor VendorCode { get; set; }
+        public string Description { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
         public static decimal _taxRate { get; } = 0.07m; //Tax is a constant 7%
-        public decimal Discount { get; private set; }
-        public Boolean isTaxed { get; private set; }
-        public string ItemNotes { get; private set; }
+        public decimal Discount { get; set; }
+        public Boolean isTaxed { get; set; }
+        public string ItemNotes { get; set; }
     }
 }

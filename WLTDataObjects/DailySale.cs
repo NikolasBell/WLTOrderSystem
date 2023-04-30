@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace WLTDataObjects
 {
-    internal class DailySale
+    public class DailySale
     {
+        public string Employee { get; set; }
         public DateTime Date { get; set; }
         public List<Order> Orders { get; set; }
     }
