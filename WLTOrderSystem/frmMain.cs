@@ -47,14 +47,16 @@ namespace WLTOrderSystem
             txtbVendor.Text = "";
             txtbDescription.Text = "";
             numQuantity.Value = 1;
-            txtbPrice.Text = "0";
-            txtbDiscount.Text = "0";
-            txtbExitPrice.Text = "0";
-            txtbTax.Text = "0";
-            txtbTotalPrice.Text = "0";
+            txtbPrice.Text = "$0.00";
+            txtbDiscount.Text = "0%";
+            txtbExitPrice.Text = "$0.00";
+            txtbTax.Text = "$0.00";
+            txtbTotalPrice.Text = "$0.00";
 
             Order currentOrder = _dailySale.Orders[orderIndex];
-            currentOrder.Items.Add(new Item { });
+            Item item = new Item();
+            item.Quantity = 1;
+            currentOrder.Items.Add(item);
             itemIndex = currentOrder.Items.Count - 1;
             _dailySale.Orders[orderIndex] = currentOrder;
         }
@@ -81,15 +83,15 @@ namespace WLTOrderSystem
         private void txtbPrice_Leave(object sender, EventArgs e)
         {
             string priceText = txtbPrice.Text.Replace("$", "").Replace(" ", "");
-            decimal price;
             try
             {
-                price = decimal.Parse(priceText);
+                decimal price = decimal.Parse(priceText);
                 txtbPrice.Text = price.ToString("C2");
 
                 Item currentItem = getCurrentItem();
                 currentItem.Price = price;
                 saveCurrentItem(currentItem);
+                updatePriceFields();
             }
             catch (Exception ex)
             {
@@ -97,6 +99,52 @@ namespace WLTOrderSystem
                 txtbPrice.Focus();
             }
         }
+
+        private void numQuantity_ValueChanged(object sender, EventArgs e)
+        {
+            Item currentItem = getCurrentItem();
+            currentItem.Quantity = (int)numQuantity.Value;
+            saveCurrentItem(currentItem);
+            updatePriceFields();
+        }
+
+        private void txtbDiscount_Leave(object sender, EventArgs e)
+        {
+            string discountText = txtbDiscount.Text.Replace("%", "").Replace(" ", "");
+
+            try
+            {
+                decimal discount = decimal.Parse(discountText);
+                txtbDiscount.Text = discount.ToString() + "%";
+
+                Item currentItem = getCurrentItem();
+                currentItem.Discount = discount * 0.01m;
+                saveCurrentItem(currentItem);
+                updatePriceFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please enter a valid number.");
+                txtbPrice.Focus();
+            }
+        }
+
+        private void updatePriceFields()
+        {
+            txtbExitPrice.Text = _salesManager.getExitPrice(getCurrentItem()).ToString("C2");
+            txtbTax.Text = _salesManager.getTaxPrice(getCurrentItem()).ToString("C2");
+            txtbTotalPrice.Text = _salesManager.getTotalPrice(getCurrentItem()).ToString("C2");
+        }
+
+        private void chkTax_CheckedChanged(object sender, EventArgs e)
+        {
+            Item currentItem = getCurrentItem();
+            currentItem.isTaxed = chkTax.Checked;
+            saveCurrentItem(currentItem);
+            updatePriceFields();
+        }
+
+
 
         private Item getCurrentItem()
         {
@@ -109,13 +157,6 @@ namespace WLTOrderSystem
             Order currentOrder = _dailySale.Orders[orderIndex];
             currentOrder.Items[itemIndex] = currentItem;
             _dailySale.Orders[orderIndex] = currentOrder;
-        }
-
-        private void numQuantity_ValueChanged(object sender, EventArgs e)
-        {
-            Item currentItem = getCurrentItem();
-            currentItem.Quantity = (int)numQuantity.Value;
-            saveCurrentItem(currentItem);
         }
     }
 }

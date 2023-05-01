@@ -27,9 +27,23 @@ namespace WLTControlLogic
             return dailySale;
         }//End newDaily
 
-        public void ItemPrice(Item item)
+        public decimal getExitPrice(Item item)
         {
-            
+            return item.Price * item.Quantity * (1 - item.Discount);
+        }
+
+        public decimal getTaxPrice(Item item)
+        {
+            decimal taxPrice = 0;
+            if (item.isTaxed)
+            {
+                taxPrice = getExitPrice(item) * Item.TaxRate;
+            }
+            return taxPrice;
+        }
+
+        public decimal getTotalPrice(Item item) {
+            return getExitPrice(item) + getTaxPrice(item);
         }
     }
 }

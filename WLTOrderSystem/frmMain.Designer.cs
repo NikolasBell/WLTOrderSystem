@@ -40,7 +40,6 @@
             this.txtbDescription = new System.Windows.Forms.TextBox();
             this.txtbPrice = new System.Windows.Forms.TextBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
-            this.rdbTax = new System.Windows.Forms.RadioButton();
             this.txtbDiscount = new System.Windows.Forms.TextBox();
             this.lblCode = new System.Windows.Forms.Label();
             this.lblVendor = new System.Windows.Forms.Label();
@@ -65,6 +64,16 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.txtbOrderNotes = new System.Windows.Forms.TextBox();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chkTax = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSalesBreakdown)).BeginInit();
@@ -121,6 +130,18 @@
             // 
             // listOrders
             // 
+            this.listOrders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9});
+            this.listOrders.FullRowSelect = true;
+            this.listOrders.GridLines = true;
             this.listOrders.HideSelection = false;
             this.listOrders.Location = new System.Drawing.Point(19, 180);
             this.listOrders.Name = "listOrders";
@@ -128,6 +149,7 @@
             this.listOrders.TabIndex = 20;
             this.listOrders.TabStop = false;
             this.listOrders.UseCompatibleStateImageBehavior = false;
+            this.listOrders.View = System.Windows.Forms.View.Details;
             // 
             // txtbCode
             // 
@@ -188,18 +210,6 @@
             0});
             this.numQuantity.ValueChanged += new System.EventHandler(this.numQuantity_ValueChanged);
             // 
-            // rdbTax
-            // 
-            this.rdbTax.AutoSize = true;
-            this.rdbTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbTax.Location = new System.Drawing.Point(782, 113);
-            this.rdbTax.Name = "rdbTax";
-            this.rdbTax.Size = new System.Drawing.Size(62, 22);
-            this.rdbTax.TabIndex = 10;
-            this.rdbTax.TabStop = true;
-            this.rdbTax.Text = "Tax?";
-            this.rdbTax.UseVisualStyleBackColor = true;
-            // 
             // txtbDiscount
             // 
             this.txtbDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -209,6 +219,7 @@
             this.txtbDiscount.TabIndex = 8;
             this.txtbDiscount.Text = "0%";
             this.txtbDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtbDiscount.Leave += new System.EventHandler(this.txtbDiscount_Leave);
             // 
             // lblCode
             // 
@@ -441,11 +452,74 @@
             this.txtbOrderNotes.TabIndex = 19;
             this.txtbOrderNotes.Text = "Notes";
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Code";
+            this.columnHeader1.Width = 64;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Vendor Name";
+            this.columnHeader2.Width = 128;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Item Description";
+            this.columnHeader3.Width = 301;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Qty";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader4.Width = 44;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Price";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader5.Width = 64;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Discount";
+            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader6.Width = 78;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Ext. Price";
+            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader7.Width = 74;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Tax";
+            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader8.Width = 80;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Total Price";
+            this.columnHeader9.Width = 84;
+            // 
+            // chkTax
+            // 
+            this.chkTax.AutoSize = true;
+            this.chkTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkTax.Location = new System.Drawing.Point(774, 113);
+            this.chkTax.Name = "chkTax";
+            this.chkTax.Size = new System.Drawing.Size(63, 22);
+            this.chkTax.TabIndex = 34;
+            this.chkTax.Text = "Tax?";
+            this.chkTax.UseVisualStyleBackColor = true;
+            this.chkTax.CheckedChanged += new System.EventHandler(this.chkTax_CheckedChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.chkTax);
             this.Controls.Add(this.txtbOrderNotes);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -470,7 +544,6 @@
             this.Controls.Add(this.lblVendor);
             this.Controls.Add(this.lblCode);
             this.Controls.Add(this.txtbDiscount);
-            this.Controls.Add(this.rdbTax);
             this.Controls.Add(this.numQuantity);
             this.Controls.Add(this.txtbPrice);
             this.Controls.Add(this.txtbDescription);
@@ -507,7 +580,6 @@
         private System.Windows.Forms.TextBox txtbDescription;
         private System.Windows.Forms.TextBox txtbPrice;
         private System.Windows.Forms.NumericUpDown numQuantity;
-        private System.Windows.Forms.RadioButton rdbTax;
         private System.Windows.Forms.TextBox txtbDiscount;
         private System.Windows.Forms.Label lblCode;
         private System.Windows.Forms.Label lblVendor;
@@ -532,6 +604,16 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtbOrderNotes;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.CheckBox chkTax;
     }
 }
 
