@@ -527,7 +527,7 @@
             this.chkTax.TabIndex = 34;
             this.chkTax.Text = "Tax?";
             this.chkTax.UseVisualStyleBackColor = true;
-            this.chkTax.CheckedChanged += new System.EventHandler(this.chkTax_CheckedChanged);
+            this.chkTax.Leave += new System.EventHandler(this.chkTax_Leave);
             // 
             // frmMain
             // 

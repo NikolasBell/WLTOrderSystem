@@ -50,36 +50,10 @@ namespace WLTOrderSystem
             _dailySale = _salesManager.Startup(); //Replace with method that checks for existing sale sheet
         } //end frmMain_Load
 
+        //Button methods
         private void btnNewItem_Click(object sender, EventArgs e)
         {
             newItem();
-        }
-
-        private void newItem()
-        {
-            //Clear relevant fields
-            txtbCode.Text = "???";
-            txtbVendor.Text = "";
-            txtbDescription.Text = "";
-            txtbPrice.Text = "$0.00";
-            txtbDiscount.Text = "0%";
-            txtbExitPrice.Text = "$0.00";
-            txtbTax.Text = "$0.00";
-            txtbTotalPrice.Text = "$0.00";
-            txtbItemNotes.Text = "";
-
-            //Create empty item
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            Item item = new Item();
-            item.Quantity = 1;
-            item.VendorCode = "???";
-
-            //Update which item is currently selected
-            currentOrder.Items.Add(item);
-            _itemIndex = currentOrder.Items.Count - 1; //Item index is set to the last item in current order list, which is presumably where the item is added.
-            _dailySale.Orders[_orderIndex] = currentOrder; //Overwrite current order with new data
-
-            updatelistItemDisplay();
         }
 
         private void btnNewOrder_Click(object sender, EventArgs e) //Create a new order item and append it to the list
@@ -98,6 +72,32 @@ namespace WLTOrderSystem
             btnNewItem.Enabled = true;
         }
 
+        private void btnDeleteItem_Click(object sender, EventArgs e)
+        {
+            Order currentOrder = _dailySale.Orders[_orderIndex];
+            currentOrder.Items.RemoveAt(_itemIndex);
+            if (currentOrder.Items.Count == _itemIndex) //Subtract from the index if it's out of range.
+            {
+                _itemIndex--;
+            }
+            _dailySale.Orders[_orderIndex] = currentOrder;
+            updatelistItemDisplay();
+            updateDataFields();
+        }
+
+        private void btnDeleteOrder_Click(object sender, EventArgs e)
+        {
+            _dailySale.Orders.RemoveAt(_orderIndex);
+            if (_dailySale.Orders.Count == _orderIndex) //Subtract from the index if it's out of range.
+            {
+                _orderIndex--;
+            }
+            _itemIndex = 0;
+            updatelistItemDisplay();
+            updateDataFields();
+        }
+
+        //Input field event listeners
         private void txtbDescription_Leave(object sender, EventArgs e)
         {
             txtbDescription.Text.Replace("|", "").Replace("\t", "");
@@ -157,7 +157,7 @@ namespace WLTOrderSystem
             }
         }
 
-        private void chkTax_CheckedChanged(object sender, EventArgs e)
+        private void chkTax_Leave(object sender, EventArgs e)
         {
             updatePriceFields();
         }
@@ -188,7 +188,7 @@ namespace WLTOrderSystem
         }
 
 
-        //This is where field update commands are stored
+        //Update UI methods
         private void updatelistItemDisplay()
         {
             listItemDisplay.Items.Clear();
@@ -229,51 +229,6 @@ namespace WLTOrderSystem
 
         }
 
-        //Retrive copy of item, return current item if no parameter is fed.
-        private Item getItem()
-        {
-            return getItem(_orderIndex, _itemIndex);
-        }
-        private Item getItem(int orderNumber, int itemNumber)
-        {
-
-            Order currentOrder = _dailySale.Orders[orderNumber];
-            if (itemNumber < 0)
-            {
-                Console.WriteLine(itemNumber);
-            }
-            return currentOrder.Items[itemNumber];
-
-        }
-
-        private void saveItem(Item currentItem)
-        {
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            currentOrder.Items[_itemIndex] = currentItem;
-            _dailySale.Orders[_orderIndex] = currentOrder;
-            updatelistItemDisplay();
-        }
-
-
-
-        private void listItemDisplay_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listItemDisplay.SelectedItems.Count > 0)
-            {
-                //Set the current index values to what was retrived in the list.
-                ListViewItem selected = listItemDisplay.SelectedItems[0];
-                _orderIndex = int.Parse(selected.SubItems[9].Text) - 1;
-                _itemIndex = int.Parse(selected.SubItems[10].Text) - 1;
-
-                updateDataFields();
-            }
-            else
-            {
-                // handle case where no items are selected
-                MessageBox.Show("There are no items to select.");
-            }
-        }
-
         private void updateDataFields()
         {
             Item currentItem = getItem();
@@ -294,29 +249,75 @@ namespace WLTOrderSystem
             txtbTotalPrice.Text = _salesManager.getTotalPrice(currentItem).ToString("C2");
         }
 
-        private void btnDeleteItem_Click(object sender, EventArgs e)
+        //Item and order get/save methods
+        private Item getItem()
         {
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            currentOrder.Items.RemoveAt(_itemIndex);
-            if (currentOrder.Items.Count == _itemIndex) //Subtract from the index if it's out of range.
-            {
-                _itemIndex--;
-            }
-            _dailySale.Orders[_orderIndex] = currentOrder;
-            updatelistItemDisplay();
-            updateDataFields();
+            return getItem(_orderIndex, _itemIndex);
         }
 
-        private void btnDeleteOrder_Click(object sender, EventArgs e)
+        private Item getItem(int orderNumber, int itemNumber)
         {
-            _dailySale.Orders.RemoveAt(_orderIndex);
-            if (_dailySale.Orders.Count == _orderIndex) //Subtract from the index if it's out of range.
+
+            Order currentOrder = _dailySale.Orders[orderNumber];
+            if (itemNumber < 0)
             {
-                _orderIndex--;
+                Console.WriteLine(itemNumber);
             }
-            _itemIndex = 0;
+            return currentOrder.Items[itemNumber];
+
+        }
+
+        private void saveItem(Item currentItem)
+        {
+            Order currentOrder = _dailySale.Orders[_orderIndex];
+            currentOrder.Items[_itemIndex] = currentItem;
+            _dailySale.Orders[_orderIndex] = currentOrder;
             updatelistItemDisplay();
-            updateDataFields();
+        }
+
+        private void newItem()
+        {
+            //Clear relevant fields
+            txtbCode.Text = "???";
+            txtbVendor.Text = "";
+            txtbDescription.Text = "";
+            txtbPrice.Text = "$0.00";
+            txtbDiscount.Text = "0%";
+            txtbExitPrice.Text = "$0.00";
+            txtbTax.Text = "$0.00";
+            txtbTotalPrice.Text = "$0.00";
+            txtbItemNotes.Text = "";
+
+            //Create empty item
+            Order currentOrder = _dailySale.Orders[_orderIndex];
+            Item item = new Item();
+            item.Quantity = 1;
+            item.VendorCode = "???";
+
+            //Update which item is currently selected
+            currentOrder.Items.Add(item);
+            _itemIndex = currentOrder.Items.Count - 1; //Item index is set to the last item in current order list, which is presumably where the item is added.
+            _dailySale.Orders[_orderIndex] = currentOrder; //Overwrite current order with new data
+
+            updatelistItemDisplay();
+        }
+
+        private void listItemDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listItemDisplay.SelectedItems.Count > 0)
+            {
+                //Set the current index values to what was retrived in the list.
+                ListViewItem selected = listItemDisplay.SelectedItems[0];
+                _orderIndex = int.Parse(selected.SubItems[9].Text) - 1;
+                _itemIndex = int.Parse(selected.SubItems[10].Text) - 1;
+
+                updateDataFields();
+            }
+            else
+            {
+                // handle case where no items are selected
+                MessageBox.Show("There are no items to select.");
+            }
         }
     }
 }
