@@ -29,7 +29,7 @@ namespace WLTControlLogic
 
         public decimal getExitPrice(Item item)
         {
-            return item.Price * item.Quantity * (1 - item.Discount);
+            return item.Price * item.Quantity;
         }
 
         public decimal getTaxPrice(Item item)

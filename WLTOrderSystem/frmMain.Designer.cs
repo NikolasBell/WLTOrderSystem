@@ -40,7 +40,6 @@
             this.DescriptionHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.QtyHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PriceHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DiscountHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExitHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TaxHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TotalHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -51,13 +50,11 @@
             this.txtbDescription = new System.Windows.Forms.TextBox();
             this.txtbPrice = new System.Windows.Forms.TextBox();
             this.numQuantity = new System.Windows.Forms.NumericUpDown();
-            this.txtbDiscount = new System.Windows.Forms.TextBox();
             this.lblCode = new System.Windows.Forms.Label();
             this.lblVendor = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.lblPrice = new System.Windows.Forms.Label();
-            this.lblDiscount = new System.Windows.Forms.Label();
             this.txtbExitPrice = new System.Windows.Forms.TextBox();
             this.lblExitPrice = new System.Windows.Forms.Label();
             this.txtbName = new System.Windows.Forms.TextBox();
@@ -137,7 +134,6 @@
             this.DescriptionHeader,
             this.QtyHeader,
             this.PriceHeader,
-            this.DiscountHeader,
             this.ExitHeader,
             this.TaxHeader,
             this.TotalHeader,
@@ -148,7 +144,7 @@
             this.listItemDisplay.HideSelection = false;
             this.listItemDisplay.Location = new System.Drawing.Point(19, 180);
             this.listItemDisplay.Name = "listItemDisplay";
-            this.listItemDisplay.Size = new System.Drawing.Size(920, 435);
+            this.listItemDisplay.Size = new System.Drawing.Size(844, 435);
             this.listItemDisplay.TabIndex = 20;
             this.listItemDisplay.TabStop = false;
             this.listItemDisplay.UseCompatibleStateImageBehavior = false;
@@ -181,12 +177,6 @@
             this.PriceHeader.Text = "Price";
             this.PriceHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.PriceHeader.Width = 64;
-            // 
-            // DiscountHeader
-            // 
-            this.DiscountHeader.Text = "Discount";
-            this.DiscountHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.DiscountHeader.Width = 78;
             // 
             // ExitHeader
             // 
@@ -273,17 +263,6 @@
             0});
             this.numQuantity.Leave += new System.EventHandler(this.numQuantity_Leave);
             // 
-            // txtbDiscount
-            // 
-            this.txtbDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbDiscount.Location = new System.Drawing.Point(571, 134);
-            this.txtbDiscount.Name = "txtbDiscount";
-            this.txtbDiscount.Size = new System.Drawing.Size(80, 26);
-            this.txtbDiscount.TabIndex = 8;
-            this.txtbDiscount.Text = "0%";
-            this.txtbDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtbDiscount.Leave += new System.EventHandler(this.txtbDiscount_Leave);
-            // 
             // lblCode
             // 
             this.lblCode.AutoSize = true;
@@ -334,20 +313,10 @@
             this.lblPrice.TabIndex = 16;
             this.lblPrice.Text = "Price";
             // 
-            // lblDiscount
-            // 
-            this.lblDiscount.AutoSize = true;
-            this.lblDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiscount.Location = new System.Drawing.Point(568, 113);
-            this.lblDiscount.Name = "lblDiscount";
-            this.lblDiscount.Size = new System.Drawing.Size(75, 18);
-            this.lblDiscount.TabIndex = 17;
-            this.lblDiscount.Text = "Discount";
-            // 
             // txtbExitPrice
             // 
             this.txtbExitPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbExitPrice.Location = new System.Drawing.Point(648, 134);
+            this.txtbExitPrice.Location = new System.Drawing.Point(573, 134);
             this.txtbExitPrice.Name = "txtbExitPrice";
             this.txtbExitPrice.Size = new System.Drawing.Size(78, 26);
             this.txtbExitPrice.TabIndex = 9;
@@ -358,7 +327,7 @@
             // 
             this.lblExitPrice.AutoSize = true;
             this.lblExitPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExitPrice.Location = new System.Drawing.Point(645, 113);
+            this.lblExitPrice.Location = new System.Drawing.Point(570, 113);
             this.lblExitPrice.Name = "lblExitPrice";
             this.lblExitPrice.Size = new System.Drawing.Size(81, 18);
             this.lblExitPrice.TabIndex = 19;
@@ -386,7 +355,7 @@
             // txtbTotalPrice
             // 
             this.txtbTotalPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbTotalPrice.Location = new System.Drawing.Point(801, 134);
+            this.txtbTotalPrice.Location = new System.Drawing.Point(726, 134);
             this.txtbTotalPrice.Name = "txtbTotalPrice";
             this.txtbTotalPrice.Size = new System.Drawing.Size(88, 26);
             this.txtbTotalPrice.TabIndex = 12;
@@ -397,7 +366,7 @@
             // 
             this.lblTotalPrice.AutoSize = true;
             this.lblTotalPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalPrice.Location = new System.Drawing.Point(801, 112);
+            this.lblTotalPrice.Location = new System.Drawing.Point(726, 112);
             this.lblTotalPrice.Name = "lblTotalPrice";
             this.lblTotalPrice.Size = new System.Drawing.Size(90, 18);
             this.lblTotalPrice.TabIndex = 23;
@@ -473,7 +442,7 @@
             // txtbTax
             // 
             this.txtbTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbTax.Location = new System.Drawing.Point(723, 134);
+            this.txtbTax.Location = new System.Drawing.Point(648, 134);
             this.txtbTax.Name = "txtbTax";
             this.txtbTax.Size = new System.Drawing.Size(79, 26);
             this.txtbTax.TabIndex = 11;
@@ -522,7 +491,7 @@
             // 
             this.chkTax.AutoSize = true;
             this.chkTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkTax.Location = new System.Drawing.Point(732, 112);
+            this.chkTax.Location = new System.Drawing.Point(657, 112);
             this.chkTax.Name = "chkTax";
             this.chkTax.Size = new System.Drawing.Size(63, 22);
             this.chkTax.TabIndex = 34;
@@ -553,13 +522,11 @@
             this.Controls.Add(this.txtbName);
             this.Controls.Add(this.lblExitPrice);
             this.Controls.Add(this.txtbExitPrice);
-            this.Controls.Add(this.lblDiscount);
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblQuantity);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblVendor);
             this.Controls.Add(this.lblCode);
-            this.Controls.Add(this.txtbDiscount);
             this.Controls.Add(this.numQuantity);
             this.Controls.Add(this.txtbPrice);
             this.Controls.Add(this.txtbDescription);
@@ -596,13 +563,11 @@
         private System.Windows.Forms.TextBox txtbDescription;
         private System.Windows.Forms.TextBox txtbPrice;
         private System.Windows.Forms.NumericUpDown numQuantity;
-        private System.Windows.Forms.TextBox txtbDiscount;
         private System.Windows.Forms.Label lblCode;
         private System.Windows.Forms.Label lblVendor;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblQuantity;
         private System.Windows.Forms.Label lblPrice;
-        private System.Windows.Forms.Label lblDiscount;
         private System.Windows.Forms.TextBox txtbExitPrice;
         private System.Windows.Forms.Label lblExitPrice;
         private System.Windows.Forms.TextBox txtbName;
@@ -625,7 +590,6 @@
         private System.Windows.Forms.ColumnHeader DescriptionHeader;
         private System.Windows.Forms.ColumnHeader QtyHeader;
         private System.Windows.Forms.ColumnHeader PriceHeader;
-        private System.Windows.Forms.ColumnHeader DiscountHeader;
         private System.Windows.Forms.ColumnHeader ExitHeader;
         private System.Windows.Forms.ColumnHeader TaxHeader;
         private System.Windows.Forms.ColumnHeader TotalHeader;

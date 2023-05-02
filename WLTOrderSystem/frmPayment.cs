@@ -15,21 +15,21 @@ namespace WLTOrderSystem
     public partial class frmPayment : Form
     {
         SalesManager _salesManager;
-        DailySale _dailySale;
         Order _order;
+        int _orderIndex;
 
-        public frmPayment(Order order, SalesManager salesManager)
+        public frmPayment(Order order, int orderIndex, SalesManager salesManager)
         {
             //Pass the sales sheet and the current order into form when created.
 
             InitializeComponent();
             this._order = order;
             this._salesManager = salesManager;
+            this._orderIndex = orderIndex;
         }
 
         private void frmPayment_Load(object sender, EventArgs e)
         {
-            Order _order
 
             int qty = 0;
             decimal exitPrice = 0;
@@ -63,8 +63,8 @@ namespace WLTOrderSystem
 
         private void frmPayment_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            currentOrder.PayType = (PaymentMethod)cboPayType.SelectedItem;
+            _order.PayType = (PaymentMethod)cboPayType.SelectedItem;
+           
         }
     }
 }

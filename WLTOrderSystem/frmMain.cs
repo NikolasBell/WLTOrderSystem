@@ -97,7 +97,8 @@ namespace WLTOrderSystem
 
         private void btnPayOrder_Click(object sender, EventArgs e)
         {
-            frmPayment paymentForm = new frmPayment(_dailySale, _orderIndex, _salesManager);
+            Order currentOrder = _dailySale.Orders[_orderIndex];
+            frmPayment paymentForm = new frmPayment(currentOrder, _orderIndex, _salesManager);
             paymentForm.Show();
         }
 
@@ -138,27 +139,6 @@ namespace WLTOrderSystem
             currentItem.Quantity = (int)numQuantity.Value;
             saveItem(currentItem);
             updatePriceFields();
-        }
-
-        private void txtbDiscount_Leave(object sender, EventArgs e)
-        {
-            string discountText = txtbDiscount.Text.Replace("%", "").Replace(" ", "");
-
-            try
-            {
-                decimal discount = decimal.Parse(discountText);
-                txtbDiscount.Text = discount.ToString() + "%";
-
-                Item currentItem = getItem();
-                currentItem.Discount = discount * 0.01m;
-                saveItem(currentItem);
-                updatePriceFields();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Please enter a valid number.");
-                txtbPrice.Focus();
-            }
         }
 
         private void chkTax_Leave(object sender, EventArgs e)
@@ -209,7 +189,6 @@ namespace WLTOrderSystem
                     listItem.SubItems.Add(item.Description);
                     listItem.SubItems.Add(item.Quantity.ToString());
                     listItem.SubItems.Add(item.Price.ToString("C2"));
-                    listItem.SubItems.Add((item.Discount * 100).ToString() + "%");
                     listItem.SubItems.Add(_salesManager.getExitPrice(item).ToString("C2"));
                     listItem.SubItems.Add(_salesManager.getTaxPrice(item).ToString("C2"));
                     listItem.SubItems.Add(_salesManager.getTotalPrice(item).ToString("C2"));
@@ -241,7 +220,6 @@ namespace WLTOrderSystem
             txtbDescription.Text = currentItem.Description;
             numQuantity.Value = currentItem.Quantity;
             txtbPrice.Text = currentItem.Price.ToString("C2");
-            txtbDiscount.Text = (currentItem.Discount * 100).ToString() + "%";
             txtbItemNotes.Text = currentItem.ItemNotes;
 
             Order currentOrder = _dailySale.Orders[_orderIndex];
@@ -260,7 +238,6 @@ namespace WLTOrderSystem
             txtbDescription.Enabled = enable;
             numQuantity.Enabled = enable;
             txtbPrice.Enabled = enable;
-            txtbDiscount.Enabled = enable;
             chkTax.Enabled = enable;
             txtbItemNotes.Enabled = enable;
             txtbOrderNotes.Enabled = enable;
@@ -299,7 +276,6 @@ namespace WLTOrderSystem
             txtbVendor.Text = "";
             txtbDescription.Text = "";
             txtbPrice.Text = "$0.00";
-            txtbDiscount.Text = "0%";
             txtbExitPrice.Text = "$0.00";
             txtbTax.Text = "$0.00";
             txtbTotalPrice.Text = "$0.00";
@@ -325,8 +301,8 @@ namespace WLTOrderSystem
             {
                 //Set the current index values to what was retrived in the list.
                 ListViewItem selected = listItemDisplay.SelectedItems[0];
-                _orderIndex = int.Parse(selected.SubItems[9].Text) - 1;
-                _itemIndex = int.Parse(selected.SubItems[10].Text) - 1;
+                _orderIndex = int.Parse(selected.SubItems[8].Text) - 1;
+                _itemIndex = int.Parse(selected.SubItems[9].Text) - 1;
 
                 updateDataFields();
             }

@@ -17,13 +17,29 @@ namespace WLTDataAccess
             char[] separator = { '\t' };
             try
             {
-                StreamReader fileReader = new StreamReader(AppData.SalesDataPath + @"\" + AppData.FruitListFileName);
+                /*StreamReader fileReader = new StreamReader(AppData.SalesDataPath + @"\" + AppData.FruitListFileName);
                 while (fileReader.EndOfStream == false)
                 {
+                    string line = fileReader.ReadLine();
+                    string[] parts;
+                    if (line.Length > 16) // minimum theoretically possible line length
+                    {
+                        parts = line.Split(separator);
+                        if (parts.Count() == 5)
+                        {
+                            Fruit newFruit = new Fruit();
+                            newFruit.Name = parts[0];
+                            newFruit.PlantType = parts[1];
+                            newFruit.Origin = parts[2];
+                            newFruit.ArticleFileName = parts[3];
+                            newFruit.ImageFileName = parts[4];
 
+                            fruitList.Add(newFruit);
+                        }
+                    }
 
-                }
-                fileReader.Close();     // if open files are not closed, this app will crash with IO access exceptions.
+                }*/
+                //fileReader.Close();     // if open files are not closed, this app will crash with IO access exceptions.
             }
             catch (Exception)
             {
