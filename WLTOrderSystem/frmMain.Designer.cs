@@ -34,7 +34,18 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtbDate = new System.Windows.Forms.TextBox();
             this.lblDate = new System.Windows.Forms.Label();
-            this.listOrders = new System.Windows.Forms.ListView();
+            this.listItemDisplay = new System.Windows.Forms.ListView();
+            this.CodeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.VendorHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DescriptionHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.QtyHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PriceHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DiscountHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ExitHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TaxHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TotalHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.OrderHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ItemHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtbCode = new System.Windows.Forms.TextBox();
             this.txtbVendor = new System.Windows.Forms.TextBox();
             this.txtbDescription = new System.Windows.Forms.TextBox();
@@ -64,15 +75,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.txtbOrderNotes = new System.Windows.Forms.TextBox();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chkTax = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).BeginInit();
@@ -116,7 +118,6 @@
             this.txtbDate.Name = "txtbDate";
             this.txtbDate.Size = new System.Drawing.Size(121, 24);
             this.txtbDate.TabIndex = 1;
-            this.txtbDate.Text = "DatePlaceHolder";
             // 
             // lblDate
             // 
@@ -128,28 +129,93 @@
             this.lblDate.TabIndex = 2;
             this.lblDate.Text = "Date";
             // 
-            // listOrders
+            // listItemDisplay
             // 
-            this.listOrders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8,
-            this.columnHeader9});
-            this.listOrders.FullRowSelect = true;
-            this.listOrders.GridLines = true;
-            this.listOrders.HideSelection = false;
-            this.listOrders.Location = new System.Drawing.Point(19, 180);
-            this.listOrders.Name = "listOrders";
-            this.listOrders.Size = new System.Drawing.Size(919, 435);
-            this.listOrders.TabIndex = 20;
-            this.listOrders.TabStop = false;
-            this.listOrders.UseCompatibleStateImageBehavior = false;
-            this.listOrders.View = System.Windows.Forms.View.Details;
+            this.listItemDisplay.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.CodeHeader,
+            this.VendorHeader,
+            this.DescriptionHeader,
+            this.QtyHeader,
+            this.PriceHeader,
+            this.DiscountHeader,
+            this.ExitHeader,
+            this.TaxHeader,
+            this.TotalHeader,
+            this.OrderHeader,
+            this.ItemHeader});
+            this.listItemDisplay.FullRowSelect = true;
+            this.listItemDisplay.GridLines = true;
+            this.listItemDisplay.HideSelection = false;
+            this.listItemDisplay.Location = new System.Drawing.Point(19, 180);
+            this.listItemDisplay.Name = "listItemDisplay";
+            this.listItemDisplay.Size = new System.Drawing.Size(920, 435);
+            this.listItemDisplay.TabIndex = 20;
+            this.listItemDisplay.TabStop = false;
+            this.listItemDisplay.UseCompatibleStateImageBehavior = false;
+            this.listItemDisplay.View = System.Windows.Forms.View.Details;
+            this.listItemDisplay.SelectedIndexChanged += new System.EventHandler(this.listItemDisplay_SelectedIndexChanged);
+            // 
+            // CodeHeader
+            // 
+            this.CodeHeader.Text = "Code";
+            this.CodeHeader.Width = 64;
+            // 
+            // VendorHeader
+            // 
+            this.VendorHeader.Text = "Vendor Name";
+            this.VendorHeader.Width = 128;
+            // 
+            // DescriptionHeader
+            // 
+            this.DescriptionHeader.Text = "Item Description";
+            this.DescriptionHeader.Width = 254;
+            // 
+            // QtyHeader
+            // 
+            this.QtyHeader.Text = "Qty";
+            this.QtyHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.QtyHeader.Width = 44;
+            // 
+            // PriceHeader
+            // 
+            this.PriceHeader.Text = "Price";
+            this.PriceHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PriceHeader.Width = 64;
+            // 
+            // DiscountHeader
+            // 
+            this.DiscountHeader.Text = "Discount";
+            this.DiscountHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.DiscountHeader.Width = 78;
+            // 
+            // ExitHeader
+            // 
+            this.ExitHeader.Text = "Ext. Price";
+            this.ExitHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ExitHeader.Width = 74;
+            // 
+            // TaxHeader
+            // 
+            this.TaxHeader.Text = "Tax";
+            this.TaxHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.TaxHeader.Width = 80;
+            // 
+            // TotalHeader
+            // 
+            this.TotalHeader.Text = "Total Price";
+            this.TotalHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.TotalHeader.Width = 84;
+            // 
+            // OrderHeader
+            // 
+            this.OrderHeader.Text = "Order #";
+            this.OrderHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.OrderHeader.Width = 48;
+            // 
+            // ItemHeader
+            // 
+            this.ItemHeader.Text = "Item #";
+            this.ItemHeader.Width = 0;
             // 
             // txtbCode
             // 
@@ -158,7 +224,6 @@
             this.txtbCode.Name = "txtbCode";
             this.txtbCode.Size = new System.Drawing.Size(68, 26);
             this.txtbCode.TabIndex = 3;
-            this.txtbCode.Text = "Code";
             // 
             // txtbVendor
             // 
@@ -167,33 +232,31 @@
             this.txtbVendor.Name = "txtbVendor";
             this.txtbVendor.Size = new System.Drawing.Size(131, 26);
             this.txtbVendor.TabIndex = 4;
-            this.txtbVendor.Text = "Vendor Name";
             // 
             // txtbDescription
             // 
             this.txtbDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtbDescription.Location = new System.Drawing.Point(212, 134);
             this.txtbDescription.Name = "txtbDescription";
-            this.txtbDescription.Size = new System.Drawing.Size(302, 26);
+            this.txtbDescription.Size = new System.Drawing.Size(255, 26);
             this.txtbDescription.TabIndex = 5;
-            this.txtbDescription.Text = "Description";
             this.txtbDescription.Leave += new System.EventHandler(this.txtbDescription_Leave);
             // 
             // txtbPrice
             // 
             this.txtbPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbPrice.Location = new System.Drawing.Point(557, 134);
+            this.txtbPrice.Location = new System.Drawing.Point(507, 134);
             this.txtbPrice.Name = "txtbPrice";
             this.txtbPrice.Size = new System.Drawing.Size(67, 26);
             this.txtbPrice.TabIndex = 7;
-            this.txtbPrice.Text = "$250.00";
+            this.txtbPrice.Text = "$0.00";
             this.txtbPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtbPrice.Leave += new System.EventHandler(this.txtbPrice_Leave);
             // 
             // numQuantity
             // 
             this.numQuantity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numQuantity.Location = new System.Drawing.Point(513, 134);
+            this.numQuantity.Location = new System.Drawing.Point(466, 134);
             this.numQuantity.Minimum = new decimal(new int[] {
             1,
             0,
@@ -208,12 +271,12 @@
             0,
             0,
             0});
-            this.numQuantity.ValueChanged += new System.EventHandler(this.numQuantity_ValueChanged);
+            this.numQuantity.Leave += new System.EventHandler(this.numQuantity_Leave);
             // 
             // txtbDiscount
             // 
             this.txtbDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbDiscount.Location = new System.Drawing.Point(621, 134);
+            this.txtbDiscount.Location = new System.Drawing.Point(571, 134);
             this.txtbDiscount.Name = "txtbDiscount";
             this.txtbDiscount.Size = new System.Drawing.Size(80, 26);
             this.txtbDiscount.TabIndex = 8;
@@ -255,7 +318,7 @@
             // 
             this.lblQuantity.AutoSize = true;
             this.lblQuantity.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQuantity.Location = new System.Drawing.Point(510, 113);
+            this.lblQuantity.Location = new System.Drawing.Point(463, 113);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(34, 18);
             this.lblQuantity.TabIndex = 15;
@@ -265,7 +328,7 @@
             // 
             this.lblPrice.AutoSize = true;
             this.lblPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrice.Location = new System.Drawing.Point(554, 113);
+            this.lblPrice.Location = new System.Drawing.Point(504, 113);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(47, 18);
             this.lblPrice.TabIndex = 16;
@@ -275,7 +338,7 @@
             // 
             this.lblDiscount.AutoSize = true;
             this.lblDiscount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiscount.Location = new System.Drawing.Point(618, 113);
+            this.lblDiscount.Location = new System.Drawing.Point(568, 113);
             this.lblDiscount.Name = "lblDiscount";
             this.lblDiscount.Size = new System.Drawing.Size(75, 18);
             this.lblDiscount.TabIndex = 17;
@@ -284,18 +347,18 @@
             // txtbExitPrice
             // 
             this.txtbExitPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbExitPrice.Location = new System.Drawing.Point(699, 134);
+            this.txtbExitPrice.Location = new System.Drawing.Point(648, 134);
             this.txtbExitPrice.Name = "txtbExitPrice";
             this.txtbExitPrice.Size = new System.Drawing.Size(78, 26);
             this.txtbExitPrice.TabIndex = 9;
-            this.txtbExitPrice.Text = "$250.00";
+            this.txtbExitPrice.Text = "$0.00";
             this.txtbExitPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblExitPrice
             // 
             this.lblExitPrice.AutoSize = true;
             this.lblExitPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExitPrice.Location = new System.Drawing.Point(696, 113);
+            this.lblExitPrice.Location = new System.Drawing.Point(645, 113);
             this.lblExitPrice.Name = "lblExitPrice";
             this.lblExitPrice.Size = new System.Drawing.Size(81, 18);
             this.lblExitPrice.TabIndex = 19;
@@ -308,7 +371,7 @@
             this.txtbName.Name = "txtbName";
             this.txtbName.Size = new System.Drawing.Size(121, 24);
             this.txtbName.TabIndex = 2;
-            this.txtbName.Text = "NamePlaceHolder";
+            this.txtbName.Leave += new System.EventHandler(this.txtbName_Leave);
             // 
             // lblName
             // 
@@ -323,18 +386,18 @@
             // txtbTotalPrice
             // 
             this.txtbTotalPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbTotalPrice.Location = new System.Drawing.Point(851, 134);
+            this.txtbTotalPrice.Location = new System.Drawing.Point(801, 134);
             this.txtbTotalPrice.Name = "txtbTotalPrice";
             this.txtbTotalPrice.Size = new System.Drawing.Size(88, 26);
             this.txtbTotalPrice.TabIndex = 12;
-            this.txtbTotalPrice.Text = "$267.50";
+            this.txtbTotalPrice.Text = "$0.00";
             this.txtbTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblTotalPrice
             // 
             this.lblTotalPrice.AutoSize = true;
             this.lblTotalPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalPrice.Location = new System.Drawing.Point(848, 113);
+            this.lblTotalPrice.Location = new System.Drawing.Point(801, 112);
             this.lblTotalPrice.Name = "lblTotalPrice";
             this.lblTotalPrice.Size = new System.Drawing.Size(90, 18);
             this.lblTotalPrice.TabIndex = 23;
@@ -372,6 +435,7 @@
             this.btnDeleteItem.TabIndex = 15;
             this.btnDeleteItem.Text = "Delete Item";
             this.btnDeleteItem.UseVisualStyleBackColor = true;
+            this.btnDeleteItem.Click += new System.EventHandler(this.btnDeleteItem_Click);
             // 
             // btnPayOrder
             // 
@@ -403,15 +467,16 @@
             this.btnDeleteOrder.TabIndex = 16;
             this.btnDeleteOrder.Text = "Delete Order";
             this.btnDeleteOrder.UseVisualStyleBackColor = true;
+            this.btnDeleteOrder.Click += new System.EventHandler(this.btnDeleteOrder_Click);
             // 
             // txtbTax
             // 
             this.txtbTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbTax.Location = new System.Drawing.Point(774, 134);
+            this.txtbTax.Location = new System.Drawing.Point(723, 134);
             this.txtbTax.Name = "txtbTax";
             this.txtbTax.Size = new System.Drawing.Size(79, 26);
             this.txtbTax.TabIndex = 11;
-            this.txtbTax.Text = "$267.50";
+            this.txtbTax.Text = "$0.00";
             this.txtbTax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtbItemNotes
@@ -421,7 +486,7 @@
             this.txtbItemNotes.Name = "txtbItemNotes";
             this.txtbItemNotes.Size = new System.Drawing.Size(272, 26);
             this.txtbItemNotes.TabIndex = 18;
-            this.txtbItemNotes.Text = "Notes";
+            this.txtbItemNotes.Leave += new System.EventHandler(this.txtbItemNotes_Leave);
             // 
             // label11
             // 
@@ -450,63 +515,13 @@
             this.txtbOrderNotes.Name = "txtbOrderNotes";
             this.txtbOrderNotes.Size = new System.Drawing.Size(272, 26);
             this.txtbOrderNotes.TabIndex = 19;
-            this.txtbOrderNotes.Text = "Notes";
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Code";
-            this.columnHeader1.Width = 64;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Vendor Name";
-            this.columnHeader2.Width = 128;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Item Description";
-            this.columnHeader3.Width = 301;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Qty";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader4.Width = 44;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Price";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader5.Width = 64;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Discount";
-            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader6.Width = 78;
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "Ext. Price";
-            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader7.Width = 74;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Tax";
-            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader8.Width = 80;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Total Price";
-            this.columnHeader9.Width = 84;
+            this.txtbOrderNotes.Leave += new System.EventHandler(this.txtbOrderNotes_Leave);
             // 
             // chkTax
             // 
             this.chkTax.AutoSize = true;
             this.chkTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkTax.Location = new System.Drawing.Point(774, 113);
+            this.chkTax.Location = new System.Drawing.Point(732, 112);
             this.chkTax.Name = "chkTax";
             this.chkTax.Size = new System.Drawing.Size(63, 22);
             this.chkTax.TabIndex = 34;
@@ -549,7 +564,7 @@
             this.Controls.Add(this.txtbDescription);
             this.Controls.Add(this.txtbVendor);
             this.Controls.Add(this.txtbCode);
-            this.Controls.Add(this.listOrders);
+            this.Controls.Add(this.listItemDisplay);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.txtbDate);
             this.Controls.Add(this.menuStrip1);
@@ -574,7 +589,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.TextBox txtbDate;
         private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.ListView listOrders;
+        private System.Windows.Forms.ListView listItemDisplay;
         private System.Windows.Forms.TextBox txtbCode;
         private System.Windows.Forms.TextBox txtbVendor;
         private System.Windows.Forms.TextBox txtbDescription;
@@ -604,16 +619,18 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtbOrderNotes;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader CodeHeader;
+        private System.Windows.Forms.ColumnHeader VendorHeader;
+        private System.Windows.Forms.ColumnHeader DescriptionHeader;
+        private System.Windows.Forms.ColumnHeader QtyHeader;
+        private System.Windows.Forms.ColumnHeader PriceHeader;
+        private System.Windows.Forms.ColumnHeader DiscountHeader;
+        private System.Windows.Forms.ColumnHeader ExitHeader;
+        private System.Windows.Forms.ColumnHeader TaxHeader;
+        private System.Windows.Forms.ColumnHeader TotalHeader;
         private System.Windows.Forms.CheckBox chkTax;
+        private System.Windows.Forms.ColumnHeader OrderHeader;
+        private System.Windows.Forms.ColumnHeader ItemHeader;
     }
 }
 
