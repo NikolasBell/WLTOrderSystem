@@ -18,6 +18,8 @@ namespace WLTOrderSystem
         SalesManager _salesManager = new SalesManager();
 
         DailySale _dailySale = new DailySale();
+
+        //Indexes for the current item and order being worked on.
         int _orderIndex = 0;
         int _itemIndex = 0;
 
@@ -28,22 +30,17 @@ namespace WLTOrderSystem
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            //txtbCode.Enabled = false;
+            //Disable fields used to display purposes only.
             txtbVendor.Enabled = false;
-            //txtbDescription.Enabled = false;
-            //numQuantity.Enabled = false;
-            //txtbPrice.Enabled = false;
-            //txtbDiscount.Enabled = false;
             txtbExitPrice.Enabled = false;
-            //chkTax.Enabled = false;
             txtbTax.Enabled = false;
             txtbTotalPrice.Enabled = false;
             btnNewItem.Enabled = false;
-            //btnDeleteOrder.Enabled = false;
-            //btnDeleteItem.Enabled = false;
-            btnPayOrder.Enabled = false;
+            //btnPayOrder.Enabled = false;
 
-            //Might need to remove code.
+            //enableIntputFields(false);
+
+            //Get today's date
             DateTime today = DateTime.Today;
             txtbDate.Text = today.ToString("MM-dd-yyyy");
 
@@ -61,6 +58,7 @@ namespace WLTOrderSystem
             //Create an empty order object
             Order order = new Order();
             order.Items = new List<Item>();
+            order.PayType = PaymentMethod.Unpaid;
 
             //Append the new order to _dailySale
             _dailySale.Orders.Add(order);
@@ -83,7 +81,7 @@ namespace WLTOrderSystem
             _dailySale.Orders[_orderIndex] = currentOrder;
             updatelistItemDisplay();
             updateDataFields();
-        }
+        }//Crashes when deleting final item
 
         private void btnDeleteOrder_Click(object sender, EventArgs e)
         {
@@ -95,6 +93,12 @@ namespace WLTOrderSystem
             _itemIndex = 0;
             updatelistItemDisplay();
             updateDataFields();
+        }//Crashes when deleting final order
+
+        private void btnPayOrder_Click(object sender, EventArgs e)
+        {
+            frmPayment paymentForm = new frmPayment(_dailySale, _orderIndex, _salesManager);
+            paymentForm.Show();
         }
 
         //Input field event listeners
@@ -249,6 +253,19 @@ namespace WLTOrderSystem
             txtbTotalPrice.Text = _salesManager.getTotalPrice(currentItem).ToString("C2");
         }
 
+        private void enableIntputFields(bool enable)
+        {
+            txtbName.Enabled = enable;
+            txtbCode.Enabled = enable;
+            txtbDescription.Enabled = enable;
+            numQuantity.Enabled = enable;
+            txtbPrice.Enabled = enable;
+            txtbDiscount.Enabled = enable;
+            chkTax.Enabled = enable;
+            txtbItemNotes.Enabled = enable;
+            txtbOrderNotes.Enabled = enable;
+        }
+
         //Item and order get/save methods
         private Item getItem()
         {
@@ -318,6 +335,9 @@ namespace WLTOrderSystem
                 // handle case where no items are selected
                 MessageBox.Show("There are no items to select.");
             }
-        }
+        }//Has a bug where
+        //it thinks no item is selected, only run again and feeds the selected item.
+
+        
     }
 }

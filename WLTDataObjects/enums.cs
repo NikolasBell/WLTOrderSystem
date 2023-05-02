@@ -9,6 +9,7 @@ namespace WLTDataObjects
 {
     public enum PaymentMethod
     {
+        Unpaid,
         Cash,
         Card,
         Check,

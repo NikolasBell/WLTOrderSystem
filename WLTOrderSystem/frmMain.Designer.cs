@@ -446,6 +446,7 @@
             this.btnPayOrder.TabIndex = 17;
             this.btnPayOrder.Text = "Pay for Order";
             this.btnPayOrder.UseVisualStyleBackColor = true;
+            this.btnPayOrder.Click += new System.EventHandler(this.btnPayOrder_Click);
             // 
             // btnNewOrder
             // 
@@ -570,7 +571,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
-            this.Text = "WLT Software";
+            this.Text = "WLT Sales Sheet";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
