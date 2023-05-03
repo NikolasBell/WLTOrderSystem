@@ -143,13 +143,14 @@
             this.listItemDisplay.GridLines = true;
             this.listItemDisplay.HideSelection = false;
             this.listItemDisplay.Location = new System.Drawing.Point(19, 180);
+            this.listItemDisplay.MultiSelect = false;
             this.listItemDisplay.Name = "listItemDisplay";
             this.listItemDisplay.Size = new System.Drawing.Size(844, 435);
             this.listItemDisplay.TabIndex = 20;
             this.listItemDisplay.TabStop = false;
             this.listItemDisplay.UseCompatibleStateImageBehavior = false;
             this.listItemDisplay.View = System.Windows.Forms.View.Details;
-            this.listItemDisplay.SelectedIndexChanged += new System.EventHandler(this.listItemDisplay_SelectedIndexChanged);
+            this.listItemDisplay.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listItemDisplay_MouseDoubleClick);
             // 
             // CodeHeader
             // 

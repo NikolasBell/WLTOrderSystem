@@ -105,26 +105,30 @@ namespace WLTOrderSystem
         //Input field event listeners
         private void txtbDescription_Leave(object sender, EventArgs e)
         {
+            //Change the current item description
             txtbDescription.Text.Replace("|", "").Replace("\t", "");
 
-
-            Item currentItem = getItem();
+            Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
             currentItem.Description = txtbDescription.Text;
-            saveItem(currentItem);
+            updatelistItemDisplay();
         }
 
         private void txtbPrice_Leave(object sender, EventArgs e)
         {
-            string priceText = txtbPrice.Text.Replace("$", "").Replace(" ", ""); //Parse out valid but irlelevent characters.
+            //Validate that the price is a decimal that's not under 0.
+            string priceText = txtbPrice.Text.Replace("$", "").Replace(" ", "");
             try
             {
                 decimal price = decimal.Parse(priceText);
-                txtbPrice.Text = price.ToString("C2");
-
-                Item currentItem = getItem();
-                currentItem.Price = price;
-                saveItem(currentItem);
-                updatePriceFields();
+                if (price > 0)
+                {
+                    txtbPrice.Text = price.ToString("C2");
+                    Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
+                    currentItem.Price = price;
+                    updatePriceFields();
+                    updatelistItemDisplay();
+                }
+                else { throw new IndexOutOfRangeException(); }
             }
             catch (Exception ex)
             {
@@ -135,24 +139,24 @@ namespace WLTOrderSystem
 
         private void numQuantity_Leave(object sender, EventArgs e)
         {
-            Item currentItem = getItem();
+            Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
             currentItem.Quantity = (int)numQuantity.Value;
-            saveItem(currentItem);
             updatePriceFields();
+            updatelistItemDisplay();
         }
 
         private void chkTax_Leave(object sender, EventArgs e)
         {
             updatePriceFields();
+            updatelistItemDisplay();
         }
 
         private void txtbItemNotes_Leave(object sender, EventArgs e)
         {
             txtbItemNotes.Text.Replace("|", "").Replace("\t", "");
 
-            Item currentItem = getItem();
+            Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex]; ;
             currentItem.ItemNotes = txtbItemNotes.Text;
-            saveItem(currentItem);
         }
 
         private void txtbOrderNotes_Leave(object sender, EventArgs e)
@@ -161,7 +165,6 @@ namespace WLTOrderSystem
 
             Order currentOrder = _dailySale.Orders[_orderIndex];
             currentOrder.OrderNotes = txtbOrderNotes.Text;
-            _dailySale.Orders[_orderIndex] = currentOrder;
         }
 
         private void txtbName_Leave(object sender, EventArgs e)
@@ -175,6 +178,7 @@ namespace WLTOrderSystem
         //Update UI methods
         private void updatelistItemDisplay()
         {
+            //Refreshes the item display list with current information.
             listItemDisplay.Items.Clear();
             int orderCount = 0;
             foreach (Order order in _dailySale.Orders)
@@ -202,9 +206,9 @@ namespace WLTOrderSystem
 
         private void updatePriceFields()
         {
-            Item currentItem = getItem();
+            //Update the price fiels on the input boxes whenever quantity, price, or tax is changed.
+            Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
             currentItem.isTaxed = chkTax.Checked; //Check for tax here every time price is needed instead of when the checkbox is updated.
-            saveItem(currentItem);
 
             txtbExitPrice.Text = _salesManager.getExitPrice(currentItem).ToString("C2");
             txtbTax.Text = _salesManager.getTaxPrice(currentItem).ToString("C2");
@@ -214,7 +218,8 @@ namespace WLTOrderSystem
 
         private void updateDataFields()
         {
-            Item currentItem = getItem();
+            //If a new item is selected, update the input feilds with that information
+            Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
             txtbCode.Text = currentItem.VendorCode;
             //txtbVendor.Text =
             txtbDescription.Text = currentItem.Description;
@@ -244,30 +249,6 @@ namespace WLTOrderSystem
         }
 
         //Item and order get/save methods
-        private Item getItem()
-        {
-            return getItem(_orderIndex, _itemIndex);
-        }
-
-        private Item getItem(int orderNumber, int itemNumber)
-        {
-
-            Order currentOrder = _dailySale.Orders[orderNumber];
-            if (itemNumber < 0)
-            {
-                Console.WriteLine(itemNumber);
-            }
-            return currentOrder.Items[itemNumber];
-
-        }
-
-        private void saveItem(Item currentItem)
-        {
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            currentOrder.Items[_itemIndex] = currentItem;
-            _dailySale.Orders[_orderIndex] = currentOrder;
-            updatelistItemDisplay();
-        }
 
         private void newItem()
         {
@@ -295,7 +276,7 @@ namespace WLTOrderSystem
             updatelistItemDisplay();
         }
 
-        private void listItemDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        private void listItemDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (listItemDisplay.SelectedItems.Count > 0)
             {
@@ -311,9 +292,8 @@ namespace WLTOrderSystem
                 // handle case where no items are selected
                 MessageBox.Show("There are no items to select.");
             }
-        }//Has a bug where
-        //it thinks no item is selected, only run again and feeds the selected item.
-
+        }
         
+
     }
 }

@@ -10,6 +10,5 @@ namespace WLTDataObjects
     {
         public static string SalesDataPath { get; set; }
         public static string VendorDataPath { get; set; }
-        public static string FruitListFileName = "fruitlist.csv";
     }
 }

@@ -10,14 +10,15 @@ namespace WLTDataAccess
 {
     public class SaleDataAccess
     {
-        public DailySale RetrieveDailySale(DateTime date) //Read and validate a DailySale from tvs files.
+        /*public DailySale RetrieveDailySale(DateTime date) //Read and validate a DailySale from tvs files.
         {
             DailySale dailySale = new DailySale();
+            string fileName = date.ToString(("MM-dd-yyyy")) + ".tsv";
 
             char[] separator = { '\t' };
             try
             {
-                /*StreamReader fileReader = new StreamReader(AppData.SalesDataPath + @"\" + AppData.FruitListFileName);
+                StreamReader fileReader = new StreamReader(AppData.SalesDataPath + @"\" + fileName);
                 while (fileReader.EndOfStream == false)
                 {
                     string line = fileReader.ReadLine();
@@ -38,14 +39,15 @@ namespace WLTDataAccess
                         }
                     }
 
-                }*/
-                //fileReader.Close();     // if open files are not closed, this app will crash with IO access exceptions.
+                }
+                fileReader.Close();     // if open files are not closed, this app will crash with IO access exceptions.
             }
             catch (Exception)
             {
                 throw;
             }
             return dailySale;
-        } // end of RetrieveFruitList()
+        } */
+        // end of RetrieveFruitList()
     }
 }
