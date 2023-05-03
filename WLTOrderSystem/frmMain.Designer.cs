@@ -32,7 +32,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtbDate = new System.Windows.Forms.TextBox();
             this.lblDate = new System.Windows.Forms.Label();
             this.listItemDisplay = new System.Windows.Forms.ListView();
             this.CodeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,7 +44,6 @@
             this.TotalHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.OrderHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ItemHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.txtbCode = new System.Windows.Forms.TextBox();
             this.txtbVendor = new System.Windows.Forms.TextBox();
             this.txtbDescription = new System.Windows.Forms.TextBox();
             this.txtbPrice = new System.Windows.Forms.TextBox();
@@ -73,6 +71,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.txtbOrderNotes = new System.Windows.Forms.TextBox();
             this.chkTax = new System.Windows.Forms.CheckBox();
+            this.cboVendorCode = new System.Windows.Forms.ComboBox();
+            this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSalesBreakdown)).BeginInit();
@@ -107,14 +107,6 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // txtbDate
-            // 
-            this.txtbDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbDate.Location = new System.Drawing.Point(19, 63);
-            this.txtbDate.Name = "txtbDate";
-            this.txtbDate.Size = new System.Drawing.Size(121, 24);
-            this.txtbDate.TabIndex = 1;
             // 
             // lblDate
             // 
@@ -207,14 +199,6 @@
             // 
             this.ItemHeader.Text = "Item #";
             this.ItemHeader.Width = 0;
-            // 
-            // txtbCode
-            // 
-            this.txtbCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbCode.Location = new System.Drawing.Point(19, 134);
-            this.txtbCode.Name = "txtbCode";
-            this.txtbCode.Size = new System.Drawing.Size(68, 26);
-            this.txtbCode.TabIndex = 3;
             // 
             // txtbVendor
             // 
@@ -337,7 +321,7 @@
             // txtbName
             // 
             this.txtbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbName.Location = new System.Drawing.Point(147, 63);
+            this.txtbName.Location = new System.Drawing.Point(143, 61);
             this.txtbName.Name = "txtbName";
             this.txtbName.Size = new System.Drawing.Size(121, 24);
             this.txtbName.TabIndex = 2;
@@ -347,7 +331,7 @@
             // 
             this.lblName.AutoSize = true;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(144, 40);
+            this.lblName.Location = new System.Drawing.Point(140, 40);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(129, 18);
             this.lblName.TabIndex = 21;
@@ -500,11 +484,32 @@
             this.chkTax.UseVisualStyleBackColor = true;
             this.chkTax.Leave += new System.EventHandler(this.chkTax_Leave);
             // 
+            // cboVendorCode
+            // 
+            this.cboVendorCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboVendorCode.FormattingEnabled = true;
+            this.cboVendorCode.Location = new System.Drawing.Point(19, 134);
+            this.cboVendorCode.Name = "cboVendorCode";
+            this.cboVendorCode.Size = new System.Drawing.Size(66, 26);
+            this.cboVendorCode.TabIndex = 35;
+            this.cboVendorCode.Leave += new System.EventHandler(this.cboVendorCode_Leave);
+            // 
+            // dtpDate
+            // 
+            this.dtpDate.CustomFormat = "";
+            this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDate.Location = new System.Drawing.Point(19, 61);
+            this.dtpDate.Name = "dtpDate";
+            this.dtpDate.Size = new System.Drawing.Size(118, 24);
+            this.dtpDate.TabIndex = 36;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.dtpDate);
+            this.Controls.Add(this.cboVendorCode);
             this.Controls.Add(this.chkTax);
             this.Controls.Add(this.txtbOrderNotes);
             this.Controls.Add(this.label12);
@@ -532,10 +537,8 @@
             this.Controls.Add(this.txtbPrice);
             this.Controls.Add(this.txtbDescription);
             this.Controls.Add(this.txtbVendor);
-            this.Controls.Add(this.txtbCode);
             this.Controls.Add(this.listItemDisplay);
             this.Controls.Add(this.lblDate);
-            this.Controls.Add(this.txtbDate);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
@@ -556,10 +559,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.TextBox txtbDate;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.ListView listItemDisplay;
-        private System.Windows.Forms.TextBox txtbCode;
         private System.Windows.Forms.TextBox txtbVendor;
         private System.Windows.Forms.TextBox txtbDescription;
         private System.Windows.Forms.TextBox txtbPrice;
@@ -597,6 +598,8 @@
         private System.Windows.Forms.CheckBox chkTax;
         private System.Windows.Forms.ColumnHeader OrderHeader;
         private System.Windows.Forms.ColumnHeader ItemHeader;
+        private System.Windows.Forms.ComboBox cboVendorCode;
+        private System.Windows.Forms.DateTimePicker dtpDate;
     }
 }
 

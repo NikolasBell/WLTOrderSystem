@@ -12,20 +12,16 @@ namespace WLTControlLogic
     {
         SaleDataAccess _saleDataAccess = new SaleDataAccess();
 
-        public DailySale Startup() //Make it check for sale instead of creating new one.
+        /*public DailySale getDailySheet(DateTime date) //Just a passthrough function for presentation layer to data layer
         {
-            // DailySale dailySale = _saleDataAccess.RetrieveDailySale(DateTime.Now);
-            DailySale dailySale = newDaily();
+            DailySale dailySale = _saleDataAccess.retrieveDailySale(date);
             return dailySale;
-        }
+        }*/
 
-        public DailySale newDaily()
+        public void saveDailySheet(DailySale dailySale) //Just a passthrough function for presentation layer to data layer
         {
-            DailySale dailySale = new DailySale();
-            dailySale.Date = DateTime.Now;
-            dailySale.Orders = new List<Order>();
-            return dailySale;
-        }//End newDaily
+            _saleDataAccess.saveDailySale(dailySale);
+        }
 
         public decimal getExitPrice(Item item)
         {

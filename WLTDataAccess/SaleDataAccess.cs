@@ -10,7 +10,7 @@ namespace WLTDataAccess
 {
     public class SaleDataAccess
     {
-        /*public DailySale RetrieveDailySale(DateTime date) //Read and validate a DailySale from tvs files.
+        /*public DailySale retrieveDailySale(DateTime date) //Read and validate a DailySale from tvs files.
         {
             DailySale dailySale = new DailySale();
             string fileName = date.ToString(("MM-dd-yyyy")) + ".tsv";
@@ -45,9 +45,17 @@ namespace WLTDataAccess
             catch (Exception)
             {
                 throw;
+                DailySale dailySale = new DailySale();
+                dailySale.Date = DateTime.Now;
+                dailySale.Orders = new List<Order>();
+                return dailySale;
             }
             return dailySale;
         } */
-        // end of RetrieveFruitList()
+
+        public void saveDailySale(DailySale dailySale)
+        {
+
+        }
     }
 }

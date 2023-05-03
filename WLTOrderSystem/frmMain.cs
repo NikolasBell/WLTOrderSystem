@@ -36,15 +36,23 @@ namespace WLTOrderSystem
             txtbTax.Enabled = false;
             txtbTotalPrice.Enabled = false;
             btnNewItem.Enabled = false;
-            //btnPayOrder.Enabled = false;
+            //Intitalize combo box
+            VendorCode[] vendorCode = (VendorCode[])Enum.GetValues(typeof(VendorCode));
+            cboVendorCode.DataSource = vendorCode;
 
             //enableIntputFields(false);
 
             //Get today's date
-            DateTime today = DateTime.Today;
-            txtbDate.Text = today.ToString("MM-dd-yyyy");
+            dtpDate.Value = DateTime.Today;
+            dtpDate.MaxDate = DateTime.Today;
+            dtpDate.Format = DateTimePickerFormat.Custom;
+            dtpDate.CustomFormat = "MM-dd-yyyy";
 
-            _dailySale = _salesManager.Startup(); //Replace with method that checks for existing sale sheet
+            DailySale dailySale = new DailySale();
+            dailySale.Date = DateTime.Now;
+            dailySale.Orders = new List<Order>();
+
+            _dailySale = dailySale; //Replace with method that checks for existing sale sheet
         } //end frmMain_Load
 
         //Button methods
@@ -103,6 +111,28 @@ namespace WLTOrderSystem
         }
 
         //Input field event listeners
+
+        private void cboVendorCode_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                //Validate code
+                int enumValue = (int)(VendorCode)cboVendorCode.SelectedItem;
+                string name = Enum.GetName(typeof(VendorName), enumValue);
+                txtbVendor.Text = name.Replace("_", " ");
+                //Save the code
+                Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
+                currentItem.VendorCode = ((VendorCode)cboVendorCode.SelectedItem).ToString();
+                updatelistItemDisplay();
+            }
+            catch
+            {
+                //Invalid code
+                MessageBox.Show("Please enter a valid code.");
+                cboVendorCode.Focus();
+            }
+        }
+
         private void txtbDescription_Leave(object sender, EventArgs e)
         {
             //Change the current item description
@@ -130,7 +160,7 @@ namespace WLTOrderSystem
                 }
                 else { throw new IndexOutOfRangeException(); }
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("Please enter a valid price.");
                 txtbPrice.Focus();
@@ -189,7 +219,12 @@ namespace WLTOrderSystem
                 {
                     itemCount++;
                     ListViewItem listItem = new ListViewItem(item.VendorCode);
-                    listItem.SubItems.Add("Placeholder"); //Replace with vendor name retrival
+
+                    VendorCode vendorCode = (VendorCode)Enum.Parse(typeof(VendorCode), item.VendorCode);//Convert string to code enumeration
+                    int enumValue = (int)vendorCode; //Convert code to enum index
+                    string name = Enum.GetName(typeof(VendorName), enumValue); //Convert index to Vendor name
+                    listItem.SubItems.Add(name.Replace("_", " "));
+
                     listItem.SubItems.Add(item.Description);
                     listItem.SubItems.Add(item.Quantity.ToString());
                     listItem.SubItems.Add(item.Price.ToString("C2"));
@@ -200,8 +235,8 @@ namespace WLTOrderSystem
                     listItem.SubItems.Add(itemCount.ToString());
 
                     listItemDisplay.Items.Add(listItem);
-                }
-            }
+                }//End Item Loop
+            }//End Order Loop
         }
 
         private void updatePriceFields()
@@ -220,7 +255,7 @@ namespace WLTOrderSystem
         {
             //If a new item is selected, update the input feilds with that information
             Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
-            txtbCode.Text = currentItem.VendorCode;
+            //txtbCode.Text = currentItem.VendorCode;
             //txtbVendor.Text =
             txtbDescription.Text = currentItem.Description;
             numQuantity.Value = currentItem.Quantity;
@@ -239,7 +274,7 @@ namespace WLTOrderSystem
         private void enableIntputFields(bool enable)
         {
             txtbName.Enabled = enable;
-            txtbCode.Enabled = enable;
+            //txtbCode.Enabled = enable;
             txtbDescription.Enabled = enable;
             numQuantity.Enabled = enable;
             txtbPrice.Enabled = enable;
@@ -253,8 +288,8 @@ namespace WLTOrderSystem
         private void newItem()
         {
             //Clear relevant fields
-            txtbCode.Text = "???";
-            txtbVendor.Text = "";
+            cboVendorCode.SelectedIndex = 0;
+            txtbVendor.Text = "Unknown Vendor";
             txtbDescription.Text = "";
             txtbPrice.Text = "$0.00";
             txtbExitPrice.Text = "$0.00";
@@ -266,7 +301,7 @@ namespace WLTOrderSystem
             Order currentOrder = _dailySale.Orders[_orderIndex];
             Item item = new Item();
             item.Quantity = 1;
-            item.VendorCode = "???";
+            item.VendorCode = ((VendorCode)cboVendorCode.SelectedItem).ToString(); ;
 
             //Update which item is currently selected
             currentOrder.Items.Add(item);
@@ -293,7 +328,7 @@ namespace WLTOrderSystem
                 MessageBox.Show("There are no items to select.");
             }
         }
-        
+
 
     }
 }
