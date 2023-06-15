@@ -16,7 +16,6 @@ namespace WLTOrderSystem
     public partial class frmMain : Form
     {
         SalesManager _salesManager = new SalesManager();
-
         DailySale _dailySale = new DailySale();
 
         //Indexes for the current item and order being worked on.
@@ -35,12 +34,9 @@ namespace WLTOrderSystem
             txtbExitPrice.Enabled = false;
             txtbTax.Enabled = false;
             txtbTotalPrice.Enabled = false;
-            btnNewItem.Enabled = false;
             //Intitalize combo box
             VendorCode[] vendorCode = (VendorCode[])Enum.GetValues(typeof(VendorCode));
             cboVendorCode.DataSource = vendorCode;
-
-            //enableIntputFields(false);
 
             //Get today's date
             dtpDate.Value = DateTime.Today;
@@ -48,17 +44,51 @@ namespace WLTOrderSystem
             dtpDate.Format = DateTimePickerFormat.Custom;
             dtpDate.CustomFormat = "MM-dd-yyyy";
 
+            //Creates new Dailysale, move later
             DailySale dailySale = new DailySale();
             dailySale.Date = DateTime.Now;
             dailySale.Orders = new List<Order>();
 
-            _dailySale = dailySale; //Replace with method that checks for existing sale sheet
+            _dailySale = _salesManager.getDailySheet(DateTime.Today);
+            enableIntputFields(false);
+
+            if (_dailySale.Orders.Count != 0)
+            {
+                updatelistItemDisplay();
+                txtbName.Text = _dailySale.Employee;
+            }
         } //end frmMain_Load
+
+        //Gets a new sales sheet when you select a date.
+        private void dtpDate_Leave(object sender, EventArgs e)
+        {
+            //Reset indexes
+            _orderIndex = 0;
+            _itemIndex = 0;
+
+            _salesManager.saveDailySheet(_dailySale);
+
+            _dailySale = _salesManager.getDailySheet(dtpDate.Value);
+            enableIntputFields(false);
+
+            if (_dailySale.Orders.Count != 0)
+            {
+                txtbName.Text = _dailySale.Employee;
+            }
+            updatelistItemDisplay();
+        }
 
         //Button methods
         private void btnNewItem_Click(object sender, EventArgs e)
         {
-            newItem();
+            if (_dailySale.Orders.Count != 0)
+            {
+                newItem();
+            }
+            else
+            {
+                MessageBox.Show("There are no orders to add to!");
+            }
         }
 
         private void btnNewOrder_Click(object sender, EventArgs e) //Create a new order item and append it to the list
@@ -76,38 +106,61 @@ namespace WLTOrderSystem
             newItem();
             chkTax.Checked = true;
             btnNewItem.Enabled = true;
+            enableIntputFields(true);
         }
 
         private void btnDeleteItem_Click(object sender, EventArgs e)
         {
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            currentOrder.Items.RemoveAt(_itemIndex);
-            if (currentOrder.Items.Count == _itemIndex) //Subtract from the index if it's out of range.
+            if (_dailySale.Orders.Count != 0)
             {
-                _itemIndex--;
+                Order currentOrder = _dailySale.Orders[_orderIndex];
+                currentOrder.Items.RemoveAt(_itemIndex);
+                if (currentOrder.Items.Count == _itemIndex) //Subtract from the index if it's out of range.
+                {
+                    _itemIndex--;
+                }
+
+                if (_itemIndex < 0) //If you deleted the final item in the order, delete the order.
+                { deleteOrder(); }
+                else
+                {
+                    updatelistItemDisplay();
+                    updateDataFields();
+                }
             }
-            _dailySale.Orders[_orderIndex] = currentOrder;
-            updatelistItemDisplay();
-            updateDataFields();
-        }//Crashes when deleting final item
+            else
+            {
+                MessageBox.Show("There are no items to delete!");
+            }
+
+
+        }
 
         private void btnDeleteOrder_Click(object sender, EventArgs e)
         {
-            _dailySale.Orders.RemoveAt(_orderIndex);
-            if (_dailySale.Orders.Count == _orderIndex) //Subtract from the index if it's out of range.
+            if (_dailySale.Orders.Count != 0)
             {
-                _orderIndex--;
+                deleteOrder();
             }
-            _itemIndex = 0;
-            updatelistItemDisplay();
-            updateDataFields();
-        }//Crashes when deleting final order
+            else
+            {
+                MessageBox.Show("There are no orders to delete!");
+            }
+        }
 
         private void btnPayOrder_Click(object sender, EventArgs e)
         {
-            Order currentOrder = _dailySale.Orders[_orderIndex];
-            frmPayment paymentForm = new frmPayment(currentOrder, _orderIndex, _salesManager);
-            paymentForm.Show();
+            if (_dailySale.Orders.Count != 0)
+            {
+                Order currentOrder = _dailySale.Orders[_orderIndex];
+                frmPayment paymentForm = new frmPayment(currentOrder, _orderIndex, _salesManager);
+                paymentForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("There are no orders to pay for!");
+            }
+
         }
 
         //Input field event listeners
@@ -122,7 +175,7 @@ namespace WLTOrderSystem
                 txtbVendor.Text = name.Replace("_", " ");
                 //Save the code
                 Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
-                currentItem.VendorCode = ((VendorCode)cboVendorCode.SelectedItem).ToString();
+                currentItem.VendorCode = (VendorCode)cboVendorCode.SelectedItem;
                 updatelistItemDisplay();
             }
             catch
@@ -218,11 +271,11 @@ namespace WLTOrderSystem
                 foreach (Item item in order.Items)
                 {
                     itemCount++;
-                    ListViewItem listItem = new ListViewItem(item.VendorCode);
+                    ListViewItem listItem = new ListViewItem(item.VendorCode.ToString());
 
-                    VendorCode vendorCode = (VendorCode)Enum.Parse(typeof(VendorCode), item.VendorCode);//Convert string to code enumeration
-                    int enumValue = (int)vendorCode; //Convert code to enum index
-                    string name = Enum.GetName(typeof(VendorName), enumValue); //Convert index to Vendor name
+                    //Use Code to get Vendor name
+                    int enumValue = (int)item.VendorCode;
+                    string name = Enum.GetName(typeof(VendorName), enumValue);
                     listItem.SubItems.Add(name.Replace("_", " "));
 
                     listItem.SubItems.Add(item.Description);
@@ -255,8 +308,13 @@ namespace WLTOrderSystem
         {
             //If a new item is selected, update the input feilds with that information
             Item currentItem = (_dailySale.Orders[_orderIndex]).Items[_itemIndex];
-            //txtbCode.Text = currentItem.VendorCode;
-            //txtbVendor.Text =
+            cboVendorCode.SelectedItem = currentItem.VendorCode;
+
+            //Use Code to get Vendor name
+            int enumValue = (int)currentItem.VendorCode;
+            string name = Enum.GetName(typeof(VendorName), enumValue);
+
+            txtbVendor.Text = name.Replace("_", " ");
             txtbDescription.Text = currentItem.Description;
             numQuantity.Value = currentItem.Quantity;
             txtbPrice.Text = currentItem.Price.ToString("C2");
@@ -273,8 +331,8 @@ namespace WLTOrderSystem
 
         private void enableIntputFields(bool enable)
         {
-            txtbName.Enabled = enable;
-            //txtbCode.Enabled = enable;
+
+            cboVendorCode.Enabled = enable;
             txtbDescription.Enabled = enable;
             numQuantity.Enabled = enable;
             txtbPrice.Enabled = enable;
@@ -301,7 +359,7 @@ namespace WLTOrderSystem
             Order currentOrder = _dailySale.Orders[_orderIndex];
             Item item = new Item();
             item.Quantity = 1;
-            item.VendorCode = ((VendorCode)cboVendorCode.SelectedItem).ToString(); ;
+            item.VendorCode = 0;
 
             //Update which item is currently selected
             currentOrder.Items.Add(item);
@@ -321,6 +379,7 @@ namespace WLTOrderSystem
                 _itemIndex = int.Parse(selected.SubItems[9].Text) - 1;
 
                 updateDataFields();
+                enableIntputFields(true);
             }
             else
             {
@@ -329,6 +388,35 @@ namespace WLTOrderSystem
             }
         }
 
+        private void deleteOrder()
+        {
+            _dailySale.Orders.RemoveAt(_orderIndex);
+            if (_dailySale.Orders.Count == _orderIndex) //Subtract from the index if it's out of range.
+            {
+                _orderIndex--;
+            }
+            _itemIndex = 0;
+            if (_orderIndex < 0)
+            {
+                updatelistItemDisplay();
+                enableIntputFields(false);
+            }
+            else
+            {
+                updatelistItemDisplay();
+                updateDataFields();
+            }
 
+
+
+        }
+
+        //Save the sales data when closing
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _salesManager.saveDailySheet(_dailySale);
+        }
+
+        
     }
 }

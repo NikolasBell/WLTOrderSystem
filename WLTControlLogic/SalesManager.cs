@@ -12,11 +12,11 @@ namespace WLTControlLogic
     {
         SaleDataAccess _saleDataAccess = new SaleDataAccess();
 
-        /*public DailySale getDailySheet(DateTime date) //Just a passthrough function for presentation layer to data layer
+        public DailySale getDailySheet(DateTime date) //Just a passthrough function for presentation layer to data layer
         {
             DailySale dailySale = _saleDataAccess.retrieveDailySale(date);
             return dailySale;
-        }*/
+        }
 
         public void saveDailySheet(DailySale dailySale) //Just a passthrough function for presentation layer to data layer
         {

@@ -486,7 +486,7 @@
             // 
             // cboVendorCode
             // 
-            this.cboVendorCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboVendorCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboVendorCode.FormattingEnabled = true;
             this.cboVendorCode.Location = new System.Drawing.Point(19, 134);
             this.cboVendorCode.Name = "cboVendorCode";
@@ -502,6 +502,7 @@
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(118, 24);
             this.dtpDate.TabIndex = 36;
+            this.dtpDate.Leave += new System.EventHandler(this.dtpDate_Leave);
             // 
             // frmMain
             // 
@@ -543,6 +544,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.Text = "WLT Sales Sheet";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

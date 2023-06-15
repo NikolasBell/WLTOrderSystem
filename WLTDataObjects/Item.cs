@@ -8,7 +8,7 @@ namespace WLTDataObjects
 {
     public class Item
     {
-        public string VendorCode { get; set; }
+        public VendorCode VendorCode { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
